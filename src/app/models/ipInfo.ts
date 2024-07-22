@@ -5,7 +5,7 @@ export interface ipInfo {
     region: string;
     city: string;
     lat: number;
-    lgn: number;
+    lng: number;
     postalCode: string;
     timezone: string;
   };
