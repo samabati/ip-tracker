@@ -1,0 +1,10 @@
+<form [formGroup]="ipForm" (ngSubmit)="submitIp()">
+  <input
+    type="text"
+    formControlName="ip"
+    placeholder="Search for any IP address or domain"
+  />
+  <button type="submit">
+    <img src="assets/arrow.svg" alt="white-arrow" />
+  </button>
+</form>

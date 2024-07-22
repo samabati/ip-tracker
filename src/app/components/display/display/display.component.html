@@ -1,0 +1,36 @@
+<section id="ip-dash">
+  <article>
+    <p>IP ADDRESS</p>
+    <h2>{{ ipInfo$.ip ? ipInfo$.ip : "Please enter an IP" }}</h2>
+  </article>
+  <div class="vertical-line"></div>
+  <article>
+    <p>Location</p>
+    @if(ipInfo$.location.city !== ""){
+    <h2>
+      {{ ipInfo$.location.city }} {{ ipInfo$.location.region }}
+      {{ ipInfo$.location.postalCode }}
+    </h2>
+    }@else {
+    <h2>Please enter an IP</h2>
+    }
+  </article>
+  <div class="vertical-line"></div>
+  <article>
+    <p>TIMEZONE</p>
+    <h2>
+      {{
+        ipInfo$.location.timezone
+          ? ipInfo$.location.timezone
+          : "Please enter an IP"
+      }}
+    </h2>
+  </article>
+  <div class="vertical-line"></div>
+  <article>
+    <p>ISP</p>
+    <h2>
+      {{ ipInfo$.isp ? ipInfo$.isp : "Please enter an IP" }}
+    </h2>
+  </article>
+</section>
