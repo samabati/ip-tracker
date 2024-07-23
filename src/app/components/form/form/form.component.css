@@ -26,8 +26,8 @@ form > input{
 }
 
 form > button{
-    width: 58px;
-    height: 58px;
+    min-width: 58px;
+    min-height: 58px;
     background-color: #000000;
     border-top-right-radius: 15px;
     border-bottom-right-radius: 15px;
