@@ -1,15 +1,9 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  EventEmitter,
-  OnDestroy,
-  OnInit,
-  Output,
-} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import * as L from 'leaflet';
 import { IpService } from '../../../services/ip.service';
 import { Subscription } from 'rxjs';
+import { icon, Icon, PointExpression } from 'leaflet';
 
 @Component({
   selector: 'app-map',
@@ -19,6 +13,7 @@ import { Subscription } from 'rxjs';
   styleUrl: './map.component.css',
 })
 export class MapComponent implements OnInit, OnDestroy {
+  private customIcon!: Icon;
   zoom: number = 4;
   longitude: number = -98.5795;
   latitude: number = 39.8283;
@@ -28,7 +23,15 @@ export class MapComponent implements OnInit, OnDestroy {
 
   subscription!: Subscription;
 
-  constructor(private ipService: IpService) {}
+  constructor(private ipService: IpService) {
+    const iconSize: PointExpression = [56, 46]; // adjust size as needed
+    this.customIcon = icon({
+      iconUrl: 'assets/custom-marker.svg',
+      iconSize: iconSize,
+      iconAnchor: [iconSize[0] / 2, iconSize[1]], // point of the icon which will correspond to marker's location
+      popupAnchor: [0, -iconSize[1]], // point from which the popup should open relative to the iconAnchor
+    });
+  }
 
   private initMap(): void {
     this.map = L.map('maps-container', {
@@ -61,7 +64,9 @@ export class MapComponent implements OnInit, OnDestroy {
           this.map.removeLayer(this.marker);
         }
 
-        this.marker = L.marker([this.latitude, this.longitude]).addTo(this.map);
+        this.marker = L.marker([this.latitude, this.longitude], {
+          icon: this.customIcon,
+        }).addTo(this.map);
         this.map.setView(this.marker.getLatLng(), this.zoom);
       } else {
         this.firstRun = false;
