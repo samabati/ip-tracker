@@ -1,0 +1,11 @@
+<form [formGroup]="ipForm" (ngSubmit)="submitIp()">
+  <input
+    [ngClass]="{ error: error$ | async }"
+    type="text"
+    formControlName="ip"
+    placeholder="Search for any IP address or domain"
+  />
+  <button type="submit" [ngClass]="{ error: error$ | async }">
+    <img src="assets/arrow.svg" alt="white-arrow" />
+  </button>
+</form>

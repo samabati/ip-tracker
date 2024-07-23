@@ -1,0 +1,58 @@
+<section id="ip-dash">
+  <article>
+    <p>IP ADDRESS</p>
+    @if(error$ | async){
+    <h2 class="error">Please enter a valid IP</h2>
+    } @else if (ipInfo$.ip !== "") {
+    <h2>{{ ipInfo$.ip ? ipInfo$.ip : "No IP available" }}</h2>
+    }@else if((error$ | async) == false) {
+    <h2>Please enter an IP</h2>
+    }
+  </article>
+  <div class="vertical-line"></div>
+  <article>
+    <p>Location</p>
+    @if(error$ | async){
+    <h2 class="error">Please enter a valid IP</h2>
+    } @else if(ipInfo$.location.city || ipInfo$.location.region ||
+    ipInfo$.location.postalCode){
+    <h2>
+      {{ ipInfo$.location.city ? ipInfo$.location.city : "" }},
+      {{ ipInfo$.location.region ? ipInfo$.location.region : "" }}
+      {{ ipInfo$.location.postalCode ? ipInfo$.location.postalCode : "" }}
+    </h2>
+    }@else if((error$ | async) == false) {
+    <h2>Please enter an IP</h2>
+    }
+  </article>
+  <div class="vertical-line"></div>
+  <article>
+    <p>TIMEZONE</p>
+    @if(error$ | async){
+    <h2 class="error">Please enter a valid IP</h2>
+    }@else if(ipInfo$.location.timezone){
+    <h2>
+      <h2>UTC {{ ipInfo$.location.timezone }}</h2>
+    </h2>
+    } @else if(ipInfo$.ip && !ipInfo$.location.timezone){
+    <h2>No Timezone Available</h2>
+    }@else if((error$ | async) == false) {
+    <h2>Please enter an IP</h2>
+    }
+  </article>
+  <div class="vertical-line"></div>
+  <article>
+    <p>ISP</p>
+    @if(error$ | async){
+    <h2 class="error">Please enter a valid IP</h2>
+    } @else if(ipInfo$.isp){
+    <h2>
+      {{ ipInfo$.isp }}
+    </h2>
+    } @else if(ipInfo$.ip && !ipInfo$.isp){
+    <h2>No ISP Available</h2>
+    } @else if((error$ | async) == false) {
+    <h2>Please enter an IP</h2>
+    }
+  </article>
+</section>
