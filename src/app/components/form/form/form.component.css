@@ -36,3 +36,12 @@ form > button{
     border-color: #000000;
     border-style: none;
 }
+
+form > input:focus{
+    border: none;
+    outline: none;
+}
+
+.error{
+    border: 1px solid red !important;
+}

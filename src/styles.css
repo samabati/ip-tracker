@@ -42,6 +42,34 @@ main{
       align-items: center;
       padding: 24px;
       gap: 24px;
+      bottom: 100px !important;
+  }
+  .vertical-line{
+      display: none;
+  }
+
+  article{
+      width: 100%;
+      text-align: center;
+  }
+}
+
+@media (max-width: 500px) {
+  #ip-dash{
+    height: 294px;
+    gap: 10px;
+  }
+  article > p{
+    font-size: 10px !important;
+    margin-bottom: 5px !important;
+  }
+
+  article > h2{
+    font-size: 20px !important;
+  }
+
+  article{
+    width: 100% !important;
   }
   .vertical-line{
       display: none;

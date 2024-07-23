@@ -24,6 +24,7 @@ export class MapComponent implements OnInit, OnDestroy {
   latitude: number = 39.8283;
   map!: L.Map; // Declare a map variable
   firstRun = true;
+  marker: L.Marker | null = null; // Add this line to declare a marker variable
 
   subscription!: Subscription;
 
@@ -52,11 +53,16 @@ export class MapComponent implements OnInit, OnDestroy {
     this.initMap();
     this.subscription = this.ipService.ipInfoSubject.subscribe((value) => {
       if (!this.firstRun) {
-        this.zoom = 10;
+        this.zoom = 13;
         this.longitude = value.location.lng;
         this.latitude = value.location.lat;
         console.log(this.longitude, this.latitude);
-        this.map.setView([this.latitude, this.longitude], this.zoom); // Update map view with new coordinates and zoom level
+        if (this.marker) {
+          this.map.removeLayer(this.marker);
+        }
+
+        this.marker = L.marker([this.latitude, this.longitude]).addTo(this.map);
+        this.map.setView(this.marker.getLatLng(), this.zoom);
       } else {
         this.firstRun = false;
       }

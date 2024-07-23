@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -9,6 +9,7 @@ import {
 } from '@angular/forms';
 import ipRegex from 'ip-regex';
 import { IpService } from '../../../services/ip.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-form',
@@ -17,13 +18,18 @@ import { IpService } from '../../../services/ip.service';
   templateUrl: './form.component.html',
   styleUrl: './form.component.css',
 })
-export class FormComponent {
+export class FormComponent implements OnInit {
   ipForm!: FormGroup;
+  error$!: Observable<boolean>;
 
   constructor(private fb: FormBuilder, private ipService: IpService) {
     this.ipForm = this.fb.group({
       ip: ['', [Validators.required, this.ipValidator]],
     });
+  }
+
+  ngOnInit() {
+    this.error$ = this.ipService.error$;
   }
 
   private ipValidator(control: FormControl): { [key: string]: any } | null {
@@ -40,7 +46,10 @@ export class FormComponent {
   }
 
   submitIp() {
-    if (this.ipForm.valid) {
+    if (this.ipForm.invalid) {
+      this.ipService.errorSubject.next(true);
+    } else if (this.ipForm.valid) {
+      this.ipService.errorSubject.next(false);
       const ip = this.ipForm.get('ip')?.getRawValue();
       this.ipService.newIp(ip);
     }

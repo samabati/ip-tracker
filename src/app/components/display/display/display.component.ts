@@ -13,8 +13,8 @@ import { pipe, map, Subscription, Observable } from 'rxjs';
 })
 export class DisplayComponent implements OnInit, OnDestroy {
   ipInfo$!: ipInfo;
-
   subscription!: Subscription;
+  error$!: Observable<boolean>;
 
   constructor(private ipService: IpService) {}
 
@@ -22,6 +22,8 @@ export class DisplayComponent implements OnInit, OnDestroy {
     this.subscription = this.ipService.ipInfo$.subscribe((value) => {
       this.ipInfo$ = value;
     });
+
+    this.error$ = this.ipService.error$;
   }
 
   ngOnDestroy(): void {

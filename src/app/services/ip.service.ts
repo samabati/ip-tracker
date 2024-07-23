@@ -7,6 +7,9 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root',
 })
 export class IpService {
+  errorSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  error$ = this.errorSubject.asObservable();
+
   ipInfoSubject!: BehaviorSubject<ipInfo>;
   ipInfo$!: Observable<ipInfo>;
 
