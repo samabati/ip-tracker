@@ -20,8 +20,6 @@ export class MapComponent implements OnInit, OnDestroy {
   map!: L.Map; // Declare a map variable
   firstRun = true;
   marker: L.Marker | null = null; // Add this line to declare a marker variable
-  latitudeOffset = 0.06; // Positive value moves the center down
-  longitudeOffset = 0; // Adjust if you want to move horizontally
 
   subscription!: Subscription;
 
@@ -35,26 +33,10 @@ export class MapComponent implements OnInit, OnDestroy {
     });
   }
 
-  initialBounds = L.latLngBounds(
-    L.latLng(
-      this.latitude - 0.1 + this.latitudeOffset,
-      this.longitude - 0.1 + this.longitudeOffset
-    ),
-    L.latLng(
-      this.latitude + 0.1 + this.latitudeOffset,
-      this.longitude + 0.1 + this.longitudeOffset
-    )
-  );
-
   private initMap(): void {
     this.map = L.map('maps-container', {
-      center: [
-        this.latitude + this.latitudeOffset,
-        this.longitude + this.longitudeOffset,
-      ],
+      center: [this.latitude, this.longitude],
       zoom: 4,
-      maxBounds: this.initialBounds,
-      maxBoundsViscosity: 1.0,
       dragging: false,
       scrollWheelZoom: false,
       doubleClickZoom: false,
@@ -91,19 +73,6 @@ export class MapComponent implements OnInit, OnDestroy {
         this.marker = L.marker([this.latitude, this.longitude], {
           icon: this.customIcon,
         }).addTo(this.map);
-
-        const newBounds = L.latLngBounds(
-          L.latLng(
-            this.latitude - 0.1 + this.latitudeOffset,
-            this.longitude - 0.1 + this.longitudeOffset
-          ),
-          L.latLng(
-            this.latitude + 0.1 + this.latitudeOffset,
-            this.longitude + 0.1 + this.longitudeOffset
-          )
-        );
-        this.map.setMaxBounds(newBounds);
-
         this.map.setView(this.marker.getLatLng(), this.zoom);
       } else {
         this.firstRun = false;
